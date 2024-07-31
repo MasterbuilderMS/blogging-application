@@ -64,8 +64,16 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href={% url "login" %}>Login</a>
-              <a class="nav-item nav-link" href={% url "register" %}>Register</a>
+              {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <a href="#" class="nav-item nav-link" onclick="this.closest('form').submit(); return false;">Logout</a>
+              </form>
+                <a class="nav-item nav-link" href="#">My account</a>
+              {% else %}
+                <a class="nav-item nav-link" href={% url "login" %}>Login</a>
+                <a class="nav-item nav-link" href={% url "register" %}>Register</a>
+              {% endif %}
             </div>
           </div>
         </div>
