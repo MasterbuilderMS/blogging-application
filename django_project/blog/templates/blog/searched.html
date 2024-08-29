@@ -1,6 +1,13 @@
-{% extends "blog/base.html" %} 
-{% block content %} 
-    {% for post in posts %}
+{% extends "blog/base.html" %}
+{% block content%}
+{% if query %}
+    <div>
+        <div>
+        <!-- check if there is a result in the database-->
+        {% if posts %}
+            <h4 class="">{{posts|length}} posts found containing {{query}}</h4>
+            <!-- loop through search query if there is a result -->
+            {% for post in posts %}
         <article class="media content-section">
             <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
             <div class="media-body">
@@ -9,11 +16,10 @@
                     <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                 </div>
                 <h2><a class="article-title" href="{% url "post-detail" post.id %}">{{ post.title }}</a></h2>
-                <p class="article-content">{{ post.content|truncatechars:500 }}</p>
-                {% if post.content|length > 200 %}
-                    <small><a class="mr-2" href="{% url "post-detail" post.id %}">Continue Reading</a></small>
+                <p class="article-content">{{ post.content|truncatechars:200 }}</p>
+                {% if post.content|length <= 200 %}
+                <a class="mr-2" href="{% url "post-detail" post.id %}">Read More?</a>
                 {% endif %}
-
             </div>
         </article>
     {% endfor %} 
@@ -37,4 +43,13 @@
         {% endif %}
 
     {% endif %}
+            <!-- return a message if there are no results found. -->
+        {% else %}
+            <h4>No search results found</h4>
+        {% endif %}
+        </div>
+    </div>
+{% else %}
+    <h3>Please enter a search query</h3>
+{% endif %}
 {% endblock content %}

@@ -60,8 +60,22 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href={% url "blog-home" %}>Home</a>
-              <a class="nav-item nav-link" href="{% url "blog-about" %}">About</a>
+              <a class="nav-item nav-link" href={% url "blog-about" %}>About</a>
             </div>
+            <!-- Navbar center -->
+             <div class = "navbar-nav ml-auto mr-auto">
+              <form class="d-flex" role="search" method="POST" action={% url "searched"%}>
+                {% csrf_token %}
+                <input
+                   class="form-control me-5 mr-1"
+                   type="search"
+                   placeholder="Search"
+                   name="search_query"
+                   required aria-label="Search"
+                >
+                <button class="btn btn-secondary " type="submit">Search</button>
+               </form>
+             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
