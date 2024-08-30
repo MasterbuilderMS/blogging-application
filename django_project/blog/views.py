@@ -52,7 +52,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
-    fields = ["content", "date_posted"]
+    fields = ["content"]
 
     def form_valid(self, form):
         form.instance.post = Post.objects.get(pk=self.kwargs.get("pk"))
